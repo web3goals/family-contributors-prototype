@@ -16,4 +16,5 @@ A web3 space where parents reward children for valuable actions
 
 ## #️⃣ Commands
 
-...
+- Install dependencies - `yarn install`
+- Start NextJS app - `yarn start`
