@@ -18,3 +18,4 @@ A web3 space where parents reward children for valuable actions
 
 - Install dependencies - `yarn install`
 - Start NextJS app - `yarn start`
+- Deploy to Vercel - `yarn vercel`
