@@ -1,59 +1,141 @@
-import Head from "next/head";
-import Link from "next/link";
-import type { NextPage } from "next";
-import { BugAntIcon, SparklesIcon } from "@heroicons/react/24/outline";
+import {
+  Timeline,
+  TimelineConnector,
+  TimelineContent,
+  TimelineItem,
+  TimelineSeparator,
+  timelineItemClasses,
+} from "@mui/lab";
+import { Container, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import Layout from "~~/components/layout";
+import { CentralizedBox, LandingTimelineDot, XxlLoadingButton } from "~~/components/styled";
 
-const Home: NextPage = () => {
+export default function Landing() {
   return (
-    <>
-      <Head>
-        <title>Scaffold-eth App</title>
-        <meta name="description" content="Created with 🏗 scaffold-eth" />
-      </Head>
-
-      <div className="flex items-center flex-col flex-grow pt-10">
-        <div className="px-5">
-          <h1 className="text-center mb-8">
-            <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">scaffold-eth 2</span>
-          </h1>
-          <p className="text-center text-lg">
-            Get started by editing{" "}
-            <code className="italic bg-base-300 text-base font-bold">packages/nextjs/pages/index.tsx</code>
-          </p>
-          <p className="text-center text-lg">
-            Edit your smart contract <code className="italic bg-base-300 text-base font-bold">YourContract.sol</code> in{" "}
-            <code className="italic bg-base-300 text-base font-bold">packages/hardhat/contracts</code>
-          </p>
-        </div>
-
-        <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contract
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <SparklesIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Experiment with{" "}
-                <Link href="/example-ui" passHref className="link">
-                  Example UI
-                </Link>{" "}
-                to build your own UI.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+    <Layout maxWidth={false} disableGutters={true} hideToolbar={true} sx={{ pt: 0 }}>
+      <CentralizedBox sx={{ mt: 0 }}>
+        {/* Header */}
+        <Box
+          sx={{
+            backgroundImage: `url(/assets/header.png)`,
+            backgroundSize: "cover",
+            minHeight: "100vh",
+            width: 1,
+          }}
+        >
+          {/* Header content */}
+          <Container
+            sx={{
+              minHeight: "100vh",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              maxWidth: "md",
+              color: "#FFFFFF",
+            }}
+          >
+            <Typography variant="h1" textAlign="center" mt={8}>
+              A <strong>web3 space</strong> where parents reward children for <strong>valuable actions</strong>
+            </Typography>
+            <XxlLoadingButton
+              variant="contained"
+              href="/contributions/publish"
+              sx={{
+                color: "purpleLight",
+                background: "#FFFFFF",
+                ":hover": { background: "#FFFFFF" },
+                mt: 4,
+              }}
+            >
+              Ask for Contribution
+            </XxlLoadingButton>
+          </Container>
+        </Box>
+        {/* Content */}
+        <Container
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            maxWidth: "md",
+          }}
+        >
+          {/* How it works */}
+          <Typography variant="h4" fontWeight={700} sx={{ mt: 12, mb: 3 }} textAlign="center">
+            How does it work?
+          </Typography>
+          <Timeline
+            sx={{
+              mt: 2,
+              [`& .${timelineItemClasses.root}:before`]: {
+                flex: 0,
+                padding: 0,
+              },
+            }}
+          >
+            {/* Step one */}
+            <TimelineItem>
+              <TimelineSeparator>
+                <LandingTimelineDot sx={{ borderColor: "blue" }} variant="outlined">
+                  <Typography fontSize={32}>🍭</Typography>
+                </LandingTimelineDot>
+                <TimelineConnector sx={{ height: 12 }} />
+              </TimelineSeparator>
+              <TimelineContent display="flex" alignItems="center">
+                <Typography variant="h6" fontWeight={700} maxWidth={320}>
+                  Publish an asking for a contribution
+                </Typography>
+              </TimelineContent>
+            </TimelineItem>
+            {/* Step two */}
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineConnector sx={{ height: 12 }} />
+                <LandingTimelineDot sx={{ borderColor: "yellow" }} variant="outlined">
+                  <Typography fontSize={32}>🔗</Typography>
+                </LandingTimelineDot>
+                <TimelineConnector sx={{ height: 12 }} />
+              </TimelineSeparator>
+              <TimelineContent display="flex" alignItems="center">
+                <Typography variant="h6" fontWeight={700} maxWidth={320}>
+                  Share the link with your family
+                </Typography>
+              </TimelineContent>
+            </TimelineItem>
+            {/* Step three */}
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineConnector sx={{ height: 12 }} />
+                <LandingTimelineDot sx={{ borderColor: "purpleLight" }} variant="outlined">
+                  <Typography fontSize={32}>👀</Typography>
+                </LandingTimelineDot>
+                <TimelineConnector sx={{ height: 12 }} />
+              </TimelineSeparator>
+              <TimelineContent display="flex" alignItems="center">
+                <Typography variant="h6" fontWeight={700} maxWidth={320}>
+                  Confirm the contribution with the provided proof
+                </Typography>
+              </TimelineContent>
+            </TimelineItem>
+            {/* Step four */}
+            <TimelineItem>
+              <TimelineSeparator>
+                <TimelineConnector sx={{ height: 12 }} />
+                <LandingTimelineDot sx={{ borderColor: "green" }} variant="outlined">
+                  <Typography fontSize={32}>😊</Typography>
+                </LandingTimelineDot>
+              </TimelineSeparator>
+              <TimelineContent display="flex" alignItems="center">
+                <Typography variant="h6" fontWeight={700} maxWidth={320}>
+                  Become happy parent!
+                </Typography>
+              </TimelineContent>
+            </TimelineItem>
+          </Timeline>
+        </Container>
+      </CentralizedBox>
+    </Layout>
   );
-};
-
-export default Home;
+}
