@@ -17,5 +17,10 @@ A web3 space where parents reward children for valuable actions
 ## #️⃣ Commands
 
 - Install dependencies - `yarn install`
+- Deploy specified contract to Polygon Mumbai - `yarn deploy --network polygonMumbai --tags Profile`
 - Start NextJS app - `yarn start`
 - Deploy to Vercel - `yarn vercel`
+
+## 🧠 Contracts (Polygon Mumbai)
+
+- Profile - 0xBD133D88c5A039Bb91Acb5c4F7775b7E42fBd7Dd
