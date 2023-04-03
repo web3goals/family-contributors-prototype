@@ -5,6 +5,7 @@ import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import NextNProgress from "nextjs-progressbar";
 import { SnackbarProvider } from "notistack";
+import { Toaster } from "react-hot-toast";
 import { WagmiConfig } from "wagmi";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
 import { DialogProvider } from "~~/context/dialog";
@@ -45,6 +46,7 @@ export default function App({ Component, pageProps }: AppProps) {
             </DialogProvider>
           </SnackbarProvider>
         </ThemeProvider>
+        <Toaster />
       </RainbowKitProvider>
     </WagmiConfig>
   );
