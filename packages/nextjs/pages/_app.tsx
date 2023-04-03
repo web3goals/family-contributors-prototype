@@ -7,7 +7,6 @@ import NextNProgress from "nextjs-progressbar";
 import { SnackbarProvider } from "notistack";
 import { Toaster } from "react-hot-toast";
 import { WagmiConfig } from "wagmi";
-import { BlockieAvatar } from "~~/components/scaffold-eth";
 import { DialogProvider } from "~~/context/dialog";
 import { useEthPrice } from "~~/hooks/scaffold-eth";
 import { useAppStore } from "~~/services/store/store";
@@ -37,7 +36,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={wagmiClient}>
       <NextNProgress />
-      <RainbowKitProvider chains={appChains.chains} avatar={BlockieAvatar}>
+      <RainbowKitProvider chains={appChains.chains}>
         <ThemeProvider theme={theme}>
           <SnackbarProvider maxSnack={3}>
             <DialogProvider>
