@@ -149,7 +149,7 @@ export default function AccountProfile(props: { address: string }) {
               />
             )}
           </Stack>
-          {/* Address, goal counters */}
+          {/* Address, reputation */}
           <Stack direction="row" alignItems="center" sx={{ mb: { xs: 1, md: 0 } }}>
             <Typography fontWeight={700} sx={{ mr: 1.5 }}>
               {addressToShortAddress(props.address)}
