@@ -8,4 +8,6 @@ library Errors {
   error TokenDoesNotExist();
   error ContributionClosed();
   error NotPotentialContributor();
+  error NotAuthor();
+  error SendingRewardFailed();
 }

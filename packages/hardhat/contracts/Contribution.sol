@@ -95,7 +95,23 @@ contract Contribution is ERC721Upgradeable, OwnableUpgradeable, PausableUpgradea
     emit ProofPosted(tokenId, proof);
   }
 
-  function confirmContributor() public whenNotPaused {}
+  function confirmContributor(uint256 tokenId, address confirmedContributor) public whenNotPaused {
+    // Base checks
+    if (!_exists(tokenId)) revert Errors.TokenDoesNotExist();
+    if (_params[tokenId].isClosed) revert Errors.ContributionClosed();
+    if (_params[tokenId].authorAddress != msg.sender) revert Errors.NotAuthor();
+    if (!_isPotentialContributor(tokenId, confirmedContributor)) revert Errors.NotPotentialContributor();
+    // Update params
+    _params[tokenId].confirmedContributor = confirmedContributor;
+    _params[tokenId].isClosed = true;
+    emit Closed(tokenId, _params[tokenId]);
+    // Update reputation
+    _accountReputations[confirmedContributor].confirmedContributions++;
+    emit AccountReputationSet(confirmedContributor, _accountReputations[confirmedContributor]);
+    // Send reward
+    (bool sent, ) = confirmedContributor.call{value: _params[tokenId].reward}("");
+    if (!sent) revert Errors.SendingRewardFailed();
+  }
 
   /// *********************************
   /// ***** PUBLIC VIEW FUNCTIONS *****
