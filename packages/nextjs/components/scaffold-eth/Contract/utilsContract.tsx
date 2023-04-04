@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
-import { Contract, utils } from "ethers";
+import { Contract, ethers, utils } from "ethers";
 import { FunctionFragment } from "ethers/lib/utils";
 import { DisplayVariable, ReadOnlyFunctionForm, WriteOnlyFunctionForm } from "~~/components/scaffold-eth";
+import { errorsLibraryAbi } from "~~/contracts/abi/errorsLibrary";
 
 /**
  * @param {Contract} contract
@@ -143,6 +144,9 @@ const getParsedEthersError = (e: any): string => {
       : JSON.stringify(e);
   if (!e.error && e.message) {
     message = e.message;
+  }
+  if (e?.error?.data?.data) {
+    message = new ethers.utils.Interface(errorsLibraryAbi).parseError(e?.error.data.data).signature;
   }
 
   console.log("Attempt to clean up:", message);

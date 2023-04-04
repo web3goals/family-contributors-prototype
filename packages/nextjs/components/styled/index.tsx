@@ -17,12 +17,12 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-export const ThickDivider = styled(Divider)<DividerProps>(({}) => ({
+export const ThickDivider = styled(Divider)<DividerProps>(() => ({
   width: "100%",
   borderBottomWidth: 5,
 }));
 
-export const FullWidthSkeleton = styled(Skeleton)<SkeletonProps>(({}) => ({
+export const FullWidthSkeleton = styled(Skeleton)<SkeletonProps>(() => ({
   width: "100%",
   height: "64px",
 }));
@@ -66,7 +66,7 @@ export const LLoadingButton = styled(LoadingButton)<LoadingButtonProps>(({ varia
   }),
 })) as typeof LoadingButton;
 
-export const CentralizedBox = styled(Box)<BoxProps>(({}) => ({
+export const CentralizedBox = styled(Box)<BoxProps>(() => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -95,32 +95,32 @@ export const WidgetBox = styled(Box)<BoxProps>(({ theme }) => ({
 
 export const WidgetTitle = styled(Typography)<TypographyProps>(({ theme }) => ({
   color: "#FFFFFF",
-  fontSize: "1.8rem",
+  fontSize: "1.4rem",
   fontWeight: 700,
   minWidth: "0px",
   marginRight: "0px",
   marginBottom: "8px",
   [theme.breakpoints.up("md")]: {
-    fontSize: "2.125rem",
+    fontSize: "1.8rem",
     minWidth: "180px",
     marginRight: "24px",
     marginBottom: "0px",
   },
 }));
 
-export const WidgetLink = styled(Link)<LinkProps>(({}) => ({
+export const WidgetLink = styled(Link)<LinkProps>(() => ({
   backgroundColor: "#FFFFFF",
   borderRadius: "12px",
   padding: "14px 20px",
 }));
 
-export const WidgetText = styled(Typography)<TypographyProps>(({}) => ({
+export const WidgetText = styled(Typography)<TypographyProps>(() => ({
   backgroundColor: "#FFFFFF",
   borderRadius: "12px",
   padding: "14px 20px",
 }));
 
-export const WidgetInputTextField = styled(TextField)<TextFieldProps>(({}) => ({
+export const WidgetInputTextField = styled(TextField)<TextFieldProps>(() => ({
   width: "120px",
   backgroundColor: "#FFFFFF",
   borderRadius: "12px",
@@ -138,7 +138,7 @@ export const WidgetInputTextField = styled(TextField)<TextFieldProps>(({}) => ({
   },
 }));
 
-export const WidgetInputSelect = styled(Select)<SelectProps>(({}) => ({
+export const WidgetInputSelect = styled(Select)<SelectProps>(() => ({
   width: "120px",
   backgroundColor: "#FFFFFF",
   borderRadius: "12px",
@@ -150,12 +150,12 @@ export const WidgetInputSelect = styled(Select)<SelectProps>(({}) => ({
   },
 }));
 
-export const WidgetSeparatorText = styled(Typography)<TypographyProps>(({}) => ({
+export const WidgetSeparatorText = styled(Typography)<TypographyProps>(() => ({
   fontWeight: 700,
   textAlign: "center",
 }));
 
-export const LandingTimelineDot = styled(TimelineDot)<TimelineDotProps>(({}) => ({
+export const LandingTimelineDot = styled(TimelineDot)<TimelineDotProps>(() => ({
   width: "72px",
   height: "72px",
   alignItems: "center",
