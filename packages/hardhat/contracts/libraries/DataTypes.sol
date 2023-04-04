@@ -15,7 +15,7 @@ library DataTypes {
   struct ContributionProof {
     uint postedTimestamp;
     address authorAddress;
-    string dataURI;
+    string extraDataURI;
   }
 
   struct ContributionAccountReputation {

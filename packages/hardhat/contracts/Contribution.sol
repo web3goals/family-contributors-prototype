@@ -83,9 +83,19 @@ contract Contribution is ERC721Upgradeable, OwnableUpgradeable, PausableUpgradea
     return newTokenId;
   }
 
-  function postProof() public {}
+  function postProof(uint256 tokenId, string memory extraDataURI) public whenNotPaused {
+    // Base Checks
+    if (!_exists(tokenId)) revert Errors.TokenDoesNotExist();
+    if (_params[tokenId].isClosed) revert Errors.ContributionClosed();
+    if (_params[tokenId].authorAddress != msg.sender && !_isPotentialContributor(tokenId, msg.sender))
+      revert Errors.NotPotentialContributor();
+    // Add proof
+    DataTypes.ContributionProof memory proof = DataTypes.ContributionProof(block.timestamp, msg.sender, extraDataURI);
+    _proofs[tokenId].push(proof);
+    emit ProofPosted(tokenId, proof);
+  }
 
-  function confirmContributor() public {}
+  function confirmContributor() public whenNotPaused {}
 
   /// *********************************
   /// ***** PUBLIC VIEW FUNCTIONS *****
@@ -144,6 +154,15 @@ contract Contribution is ERC721Upgradeable, OwnableUpgradeable, PausableUpgradea
   /// ******************************
   /// ***** INTERNAL FUNCTIONS *****
   /// ******************************
+
+  function _isPotentialContributor(uint256 tokenId, address accountAddress) internal view returns (bool) {
+    for (uint i = 0; i < _params[tokenId].potentialContributors.length; i++) {
+      if (_params[tokenId].potentialContributors[i] == accountAddress) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   /**
    * Hook that is called before any token transfer.

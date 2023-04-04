@@ -5,4 +5,7 @@ library Errors {
   error TokenNotTransferable();
   error MessageValueMismatch();
   error RewardInvalid();
+  error TokenDoesNotExist();
+  error ContributionClosed();
+  error NotPotentialContributor();
 }
