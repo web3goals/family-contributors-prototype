@@ -3,4 +3,6 @@ pragma solidity ^0.8.9;
 
 library Errors {
   error TokenNotTransferable();
+  error MessageValueMismatch();
+  error RewardInvalid();
 }

@@ -1,6 +1,6 @@
-import { Signer } from "ethers";
+import { BigNumber, Signer } from "ethers";
 import { ethers } from "hardhat";
-import { Profile, Profile__factory } from "../typechain-types";
+import { Contribution, Contribution__factory, Profile, Profile__factory } from "../typechain-types";
 import { revertToSnapshot, takeSnapshot } from "./helpers/utils";
 
 export const profileUris = {
@@ -8,6 +8,13 @@ export const profileUris = {
   two: "ipfs://def",
   three: "ipfs://123",
   four: "ipfs://456",
+};
+
+export const contributionParams = {
+  one: {
+    description: "Clean up the garage and throw out all the junk",
+    reward: BigNumber.from("50000000000000000"),
+  },
 };
 
 export let accounts: Array<Signer>;
@@ -24,6 +31,7 @@ export let userThreeAddress: string;
 export let userFourAddress: string;
 
 export let profileContract: Profile;
+export let contributionContract: Contribution;
 
 export function makeSuiteCleanRoom(name: string, tests: () => void) {
   return describe(name, () => {
@@ -56,4 +64,8 @@ before(async function () {
   // Deploy profile contract
   profileContract = await new Profile__factory(deployer).deploy();
   await profileContract.initialize();
+
+  // Deploy contribution contract
+  contributionContract = await new Contribution__factory(deployer).deploy();
+  await contributionContract.initialize();
 });
