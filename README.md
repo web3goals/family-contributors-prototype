@@ -12,7 +12,10 @@ A web3 space where parents reward children for valuable actions
 
 ## 🪄 How does it work?
 
-...
+1. Publish an asking for a contribution.
+2. Share the link with your family.
+3. Confirm the contribution with the provided proof.
+4. Become happy parent!
 
 ## #️⃣ Commands
 
