@@ -158,9 +158,8 @@ function ContributionProofCard(props: {
                   alt="Proof image"
                   width="100"
                   height="100"
-                  layout="responsive"
-                  loading="lazy"
-                  style={{ borderRadius: "18px" }}
+                  sizes="100vw"
+                  style={{ borderRadius: "18px", width: "100%", height: "auto" }}
                 />
               </Box>
             ) : (
