@@ -99,6 +99,27 @@ export default function Navigation() {
               </Link>
             </Box>
           )}
+          {/* Explore link */}
+          <Box
+            sx={{
+              display: { xs: "none", md: "block" },
+              flexGrow: 0,
+              mr: 3.5,
+            }}
+          >
+            <Link href="/contributions" passHref legacyBehavior>
+              <Typography
+                component="a"
+                sx={{
+                  fontWeight: 700,
+                  color: "inherit",
+                  textDecoration: "none",
+                }}
+              >
+                Explore
+              </Typography>
+            </Link>
+          </Box>
           {/* Connect button */}
           <Box sx={{ flexGrow: 0, mr: { xs: 0, md: 2 } }}>
             <ConnectButton showBalance={false} accountStatus={{ smallScreen: "address", largeScreen: "full" }} />
@@ -168,6 +189,10 @@ export default function Navigation() {
                 <MenuItem>Account</MenuItem>
               </Link>
             )}
+            {/* Explore link */}
+            <Link href="/contributions" passHref legacyBehavior>
+              <MenuItem>Explore</MenuItem>
+            </Link>
             <Divider />
             {/* GitHub link */}
             <MenuItem href={CONTACTS.github} target="_blank" component="a">
