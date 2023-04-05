@@ -29,6 +29,8 @@ export default function Contribution() {
             description={params.description}
             reward={params.reward}
             potentialContributors={params.potentialContributors as Array<string>}
+            confirmedContributor={params.confirmedContributor}
+            isClosed={params.isClosed}
           />
           <ThickDivider sx={{ mt: 8 }} />
           <ContributionProofs
