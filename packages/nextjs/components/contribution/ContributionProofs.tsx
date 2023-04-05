@@ -41,27 +41,29 @@ export default function ContributionProofs(props: {
         👀 Proofs of contribution
       </Typography>
       {/* Button to add proof */}
-      <Box display="flex" flexDirection="column" alignItems="center" mt={3} mb={3}>
-        <XlLoadingButton
-          variant="contained"
-          onClick={() =>
-            showDialog?.(
-              <ContributionPostProofDialog
-                id={props.id}
-                onSuccess={() => {
-                  refetchProofs();
-                }}
-                onClose={closeDialog}
-              />,
-            )
-          }
-        >
-          Post Proof
-        </XlLoadingButton>
-      </Box>
+      {!props.isClosed && (
+        <Box display="flex" flexDirection="column" alignItems="center" mt={3}>
+          <XlLoadingButton
+            variant="contained"
+            onClick={() =>
+              showDialog?.(
+                <ContributionPostProofDialog
+                  id={props.id}
+                  onSuccess={() => {
+                    refetchProofs();
+                  }}
+                  onClose={closeDialog}
+                />,
+              )
+            }
+          >
+            Post Proof
+          </XlLoadingButton>
+        </Box>
+      )}
       {/* List with proofs */}
       {proofs && proofs.length > 0 && (
-        <Stack spacing={2}>
+        <Stack spacing={2} mt={3}>
           {[...proofs].reverse().map((proof, index) => (
             <ContributionProofCard
               key={index}
@@ -81,12 +83,12 @@ export default function ContributionProofs(props: {
       )}
       {/* Empty list */}
       {proofs && proofs.length === 0 && (
-        <CardBox>
+        <CardBox mt={3}>
           <Typography textAlign="center">😐 no proofs</Typography>
         </CardBox>
       )}
       {/* Loading list */}
-      {!proofs && <FullWidthSkeleton />}
+      {!proofs && <FullWidthSkeleton sx={{ mt: 3 }} />}
     </Box>
   );
 }
