@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CardBox, FullWidthSkeleton, XxlLoadingButton } from "../styled";
+import { CardBox, FullWidthSkeleton } from "../styled";
 import { Avatar, Box, Link as MuiLink, Stack, SxProps, Typography } from "@mui/material";
 import { BigNumber, ethers } from "ethers";
 import ContributionEntity from "~~/entities/subgraph/ContributionEntity";
@@ -20,32 +20,19 @@ export default function ContributionList(props: {
   const { handleError } = useError();
   const { findContributions } = useSubgraph();
   const [contributions, setContributions] = useState<Array<ContributionEntity> | undefined>();
-  const [isMoreContributionsExist, setIsMoreContributionsExist] = useState(true);
-  const [pageNumber, setPageNumber] = useState(0);
-  const pageSize = 3;
-
-  async function loadMoreContributions(pageNumber: number) {
-    try {
-      const loadedContributions = await findContributions({
-        authorAddress: props.authorAddress,
-        potentialContributor: props.potentialContributor,
-        first: pageSize,
-        skip: pageNumber * pageSize,
-      });
-      setContributions(contributions ? [...contributions, ...loadedContributions] : loadedContributions);
-      setPageNumber(pageNumber);
-      if (loadedContributions.length === 0) {
-        setIsMoreContributionsExist(false);
-      }
-    } catch (error: any) {
-      handleError(error, true);
-    }
-  }
+  const pageSize = 20;
 
   useEffect(() => {
     setContributions(undefined);
-    setIsMoreContributionsExist(true);
-    loadMoreContributions(0);
+    findContributions({
+      authorAddress: props.authorAddress,
+      potentialContributor: props.potentialContributor,
+      first: pageSize,
+    })
+      .then(result => {
+        setContributions(result);
+      })
+      .catch(error => handleError(error, true));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
@@ -57,19 +44,6 @@ export default function ContributionList(props: {
           {contributions.map((contribution, index) => (
             <ContributionCard key={index} contribution={contribution} />
           ))}
-          {/* Actions */}
-          <Stack direction="row" spacing={2} justifyContent="center" sx={{ mt: 4 }}>
-            {isMoreContributionsExist && (
-              <XxlLoadingButton
-                variant="outlined"
-                onClick={() => {
-                  loadMoreContributions(pageNumber + 1);
-                }}
-              >
-                Load More
-              </XxlLoadingButton>
-            )}
-          </Stack>
         </Stack>
       )}
       {/* Empty list */}
