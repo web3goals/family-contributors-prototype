@@ -18,6 +18,7 @@ A web3 space where parents reward children for valuable actions
 
 - Install dependencies - `yarn install`
 - Deploy specified contract to Polygon Mumbai - `yarn deploy --network polygonMumbai --tags Profile`
+- Verify specified contract on Polygon Mumbai - `npx hardhat verify --network polygonMumbai 0x8765128F69c786C50c8F32Ca8D18aae79309c5A3`
 - Start NextJS app - `yarn start`
 - Deploy to Vercel - `yarn vercel`
 
