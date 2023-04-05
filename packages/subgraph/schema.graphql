@@ -1,0 +1,10 @@
+type Contribution @entity {
+  id: ID! # token id
+  publishedTimestamp: BigInt!
+  authorAddress: String!
+  description: String!
+  reward: BigInt!
+  potentialContributors: [String!]!
+  confirmedContributor: String!
+  isClosed: Boolean!
+}
