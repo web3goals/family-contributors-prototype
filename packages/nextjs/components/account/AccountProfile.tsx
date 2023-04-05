@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AlternateEmail, Instagram, Language, Telegram, Twitter } from "@mui/icons-material";
-import { Avatar, Box, Divider, IconButton, Typography } from "@mui/material";
+import { Avatar, Box, Divider, IconButton, Tooltip, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useAccount } from "wagmi";
 import { FullWidthSkeleton, XlLoadingButton } from "~~/components/styled";
@@ -14,8 +14,6 @@ import { addressToShortAddress, ipfsUriToHttpUri } from "~~/utils/converters";
 
 /**
  * A component with account profile.
- *
- * TODO: Display account data
  */
 export default function AccountProfile(props: { address: string }) {
   const { handleError } = useError();
@@ -25,12 +23,18 @@ export default function AccountProfile(props: { address: string }) {
 
   // Contract states
   const {
-    data: contractData,
-    status: contractStatus,
-    error: contractError,
+    data: profileUri,
+    status: readProfileUriStatus,
+    error: readProfileUriError,
   } = useScaffoldContractRead({
     contractName: "Profile",
     functionName: "getURI",
+    args: [props.address],
+  });
+
+  const { data: accountReputation } = useScaffoldContractRead({
+    contractName: "Contribution",
+    functionName: "getAccountReputation",
     args: [props.address],
   });
 
@@ -38,20 +42,20 @@ export default function AccountProfile(props: { address: string }) {
    * Load profile data from ipfs when contract reading is successed.
    */
   useEffect(() => {
-    if (contractStatus === "success") {
-      if (contractData) {
-        loadJsonFromIpfs(contractData)
+    if (readProfileUriStatus === "success") {
+      if (profileUri) {
+        loadJsonFromIpfs(profileUri)
           .then(result => setProfileData(result))
           .catch(error => handleError(error, true));
       } else {
         setProfileData(null);
       }
     }
-    if (contractStatus === "error" && contractError) {
+    if (readProfileUriStatus === "error" && readProfileUriError) {
       setProfileData(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.address, contractStatus, contractError, contractData]);
+  }, [props.address, readProfileUriStatus, readProfileUriError, profileUri]);
 
   if (profileData !== undefined) {
     return (
@@ -154,6 +158,13 @@ export default function AccountProfile(props: { address: string }) {
             <Typography fontWeight={700} sx={{ mr: 1.5 }}>
               {addressToShortAddress(props.address)}
             </Typography>
+            {accountReputation && (
+              <Tooltip title="Confirmed contributions">
+                <Typography fontWeight={700} sx={{ mr: 1.5, cursor: "help" }}>
+                  🍭 {accountReputation.confirmedContributions.toString()}
+                </Typography>
+              </Tooltip>
+            )}
           </Stack>
         </Stack>
         {/* Owner buttons */}
