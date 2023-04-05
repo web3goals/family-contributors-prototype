@@ -18,6 +18,10 @@ A web3 space where parents reward children for valuable actions
 3. Confirm the contribution with the provided proof.
 4. Become happy parent!
 
+## Tech Stack
+
+...
+
 ## #️⃣ Commands
 
 - Install dependencies - `yarn install`
