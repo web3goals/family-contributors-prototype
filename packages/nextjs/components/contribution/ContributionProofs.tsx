@@ -1,23 +1,30 @@
 import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
-import { CardBox, FullWidthSkeleton, XlLoadingButton } from "../styled";
+import { CardBox, FullWidthSkeleton, LLoadingButton, XlLoadingButton } from "../styled";
 import ContributionPostProofDialog from "./ContributionPostProofDialog";
 import { Avatar, Box, Link as MuiLink, Stack, SxProps, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { BigNumber } from "ethers";
-import { useAccount } from "wagmi";
+import { useAccount, useWaitForTransaction } from "wagmi";
 import { DialogContext } from "~~/context/dialog";
 import ProofUriDataEntity from "~~/entities/uri/ProofUriDataEntity";
-import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
+import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import useError from "~~/hooks/useError";
 import useIpfs from "~~/hooks/useIpfs";
+import useToasts from "~~/hooks/useToast";
 import { emojiAvatarForAddress } from "~~/utils/avatars";
 import { addressToShortAddress, bigNumberTimestampToLocaleDateString, ipfsUriToHttpUri } from "~~/utils/converters";
 
 /**
  * A component with contribution proofs.
  */
-export default function ContributionProofs(props: { id: string; sx?: SxProps }) {
+export default function ContributionProofs(props: {
+  id: string;
+  authorAddress: string;
+  isClosed: boolean;
+  onUpdate: () => void;
+  sx?: SxProps;
+}) {
   const { showDialog, closeDialog } = useContext(DialogContext);
 
   // Contract states
@@ -55,15 +62,18 @@ export default function ContributionProofs(props: { id: string; sx?: SxProps }) 
       {/* List with proofs */}
       {proofs && proofs.length > 0 && (
         <Stack spacing={2}>
-          {proofs.map((proof, index) => (
+          {[...proofs].reverse().map((proof, index) => (
             <ContributionProofCard
               key={index}
               authorAddress={proof.authorAddress}
               postedTimestamp={proof.postedTimestamp}
               extraDataURI={proof.extraDataURI}
+              contributionId={props.id}
+              contributionAuthorAddress={props.authorAddress}
+              isContributionClosed={props.isClosed}
               onUpdate={() => {
-                // TODO: Update contribution params
-                // TODO: Update proofs
+                refetchProofs();
+                props.onUpdate();
               }}
             />
           ))}
@@ -85,7 +95,11 @@ function ContributionProofCard(props: {
   authorAddress: string;
   postedTimestamp: BigNumber;
   extraDataURI: string;
+  contributionId: string;
+  contributionAuthorAddress: string;
+  isContributionClosed: boolean;
   onUpdate: () => void;
+  sx?: SxProps;
 }) {
   const { handleError } = useError();
   const { address } = useAccount();
@@ -106,6 +120,7 @@ function ContributionProofCard(props: {
       sx={{
         display: "flex",
         flexDirection: "row",
+        ...props.sx,
       }}
     >
       {/* Left part */}
@@ -179,8 +194,58 @@ function ContributionProofCard(props: {
           </Typography>
         )}
         {/* Button to confirm */}
-        {/* TODO: Display for contribution author is contribution is not closed */}
+        {!props.isContributionClosed && address === props.contributionAuthorAddress && (
+          <ContributionProofConfirmButton
+            id={props.contributionId}
+            confirmedContributor={props.authorAddress}
+            onSuccess={props.onUpdate}
+            sx={{ mt: 2 }}
+          />
+        )}
       </Box>
     </CardBox>
+  );
+}
+
+function ContributionProofConfirmButton(props: {
+  id: string;
+  confirmedContributor: string;
+  onSuccess: () => void;
+  sx?: SxProps;
+}) {
+  const { showToastSuccess } = useToasts();
+
+  const {
+    writeAsync: contractWriteAsync,
+    isLoading: isContractLoading,
+    data: contractData,
+  } = useScaffoldContractWrite({
+    contractName: "Contribution",
+    functionName: "confirmContributor",
+    args: [BigNumber.from(props.id), props.confirmedContributor],
+  });
+
+  const { isLoading: isTransactionLoading, isSuccess: isTransactionSuccess } = useWaitForTransaction({
+    hash: contractData?.hash,
+  });
+
+  useEffect(() => {
+    if (isTransactionSuccess) {
+      showToastSuccess("Contribution is confirmed");
+      props.onSuccess();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isTransactionSuccess]);
+
+  return (
+    <LLoadingButton
+      variant="outlined"
+      loading={isContractLoading}
+      disabled={isContractLoading || isTransactionLoading || isTransactionSuccess}
+      onClick={() => contractWriteAsync?.()}
+      sx={{ ...props.sx }}
+    >
+      Confirm
+    </LLoadingButton>
   );
 }
