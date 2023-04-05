@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ContributionList from "../contribution/ContributionList";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { SxProps, Tab } from "@mui/material";
 import { Box } from "@mui/system";
@@ -29,12 +30,10 @@ export default function AccountContributionTabs(props: { address: string; sx?: S
           <Tab label="Asked to contribute" value="2" />
         </TabList>
         <TabPanel value="1" sx={{ px: 0 }}>
-          ...
-          {/* TODO: Display contribution list */}
+          <ContributionList authorAddress={props.address} />
         </TabPanel>
         <TabPanel value="2" sx={{ px: 0 }}>
-          ...
-          {/* TODO: Display contribution list */}
+          <ContributionList potentialContributor={props.address} />
         </TabPanel>
       </TabContext>
     </Box>
