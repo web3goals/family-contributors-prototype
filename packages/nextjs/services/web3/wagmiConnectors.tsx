@@ -36,12 +36,12 @@ export const appChains = configureChains(
   ],
   {
     stallTimeout: 3_000,
-    // Sets pollingInterval if using chain's other than local hardhat chain
-    ...(configuredNetwork.id !== chains.hardhat.id
-      ? {
-          pollingInterval: scaffoldConfig.pollingInterval,
-        }
-      : {}),
+    // // Sets pollingInterval if using chain's other than local hardhat chain
+    // ...(configuredNetwork.id !== chains.hardhat.id
+    //   ? {
+    //       pollingInterval: scaffoldConfig.pollingInterval,
+    //     }
+    //   : {}),
   },
 );
 
