@@ -24,7 +24,13 @@ So I decided to build this project. Family Contributors is an app where parents 
 
 ## Tech Stack
 
-...
+- [Scaffold-Eth 2](https://github.com/scaffold-eth/se-2)
+- TypeScript
+- Solidity
+- React
+- Hardhat
+- NextJS
+- [The Graph](https://thegraph.com/en/)
 
 ## #️⃣ Commands
 
