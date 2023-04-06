@@ -70,7 +70,7 @@ export default function ContributionPublishForm(props: { onSuccessPublish: (id: 
   useScaffoldEventSubscriber({
     contractName: "Contribution",
     eventName: "Transfer",
-    listener(from, to, tokenId) {
+    listener: (from, to, tokenId) => {
       if (from === ethers.constants.AddressZero && to === address) {
         props.onSuccessPublish(tokenId.toString());
       }
