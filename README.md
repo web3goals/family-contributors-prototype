@@ -11,9 +11,9 @@ A web3 space where parents reward children for valuable actions
 
 The current generation of adults finds blockchain and cryptocurrencies hard to accept. They have already formed habits, and it is difficult for them to accept something new.
 
-So I suggest focus on children, they are ready for anything new. Together with them, blockchain can reach into all areas of our lives and make this world more transparent and honest.
+So I suggest focus on children, they adapt to technology more quickly. Together with them, blockchain can reach into all spaces and make this world more transparent and honest.
 
-So I decided to build this project. Family Contributors is an app where parents reward their children for valuable actions using web3 technology.
+That is why I decided to build this project. Family Contributors is an app where parents reward their children for valuable actions using web3 technology.
 
 ## 🪄 How does it work?
 
