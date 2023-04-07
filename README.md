@@ -1,6 +1,6 @@
 # 🍭 Family Contributors
 
-A web3 space where parents reward children for valuable actions
+A web3 space where parents reward children for valuable actions and help the younger generation become the next billion blockchain users.
 
 ## 🔗 Links
 
